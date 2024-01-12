@@ -30,6 +30,14 @@ class Test extends StatefulWidget {
 class TestState extends State<Test> {
   late TextEditingController textEditingController;
   Color backgroundColor = Colors.red;
+  Map<String, bool> sportList = {
+    "Basket": false,
+    "Boxe": true,
+    "Hockey": true,
+    "Foot": true,
+    "Cricket": true,
+    "Danse": true,
+  };
 
   @override
   void initState() {
@@ -47,34 +55,35 @@ class TestState extends State<Test> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: ElevatedButton(
-              onPressed: (
-                      () => setState(() {
-                    backgroundColor = backgroundColor == Colors.red
-                        ? Colors.blue
-                        : Colors.red;
-                  })
-              ),
-              onLongPress: () => print("Long press!"),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: backgroundColor,
-                  shadowColor: Colors.blue,
-                  elevation: 12
-              ),
-              child: const Text(
-                  "Change color!",
-                  style: TextStyle(color: Colors.white)
-              ),
-            )
-          ),
-          Text(textEditingController.text)
-        ],
-      ),
+      body: SafeArea(
+        child: generateCheckList(),
+      )
     );
+  }
+
+  Widget generateCheckList() {
+
+    List<Widget> widgetSportList = [];
+
+    sportList.forEach((label, value) {
+
+      Widget rowItem = Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(label),
+          Checkbox(
+              value: value,
+              onChanged: ((newValue) => setState(() {
+                sportList[label] = newValue ?? false;
+              }))
+          )
+        ],
+      );
+
+      widgetSportList.add(rowItem);
+    });
+
+    return Column(children: widgetSportList);
   }
 }
