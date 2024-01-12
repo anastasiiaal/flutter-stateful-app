@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'class/profile.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -15,75 +17,40 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Test(),
+      home: const InteractivePage(),
     );
   }
 }
 
-class Test extends StatefulWidget {
-  const Test({super.key});
+class InteractivePage extends StatefulWidget {
+  const InteractivePage({super.key});
 
   @override
-  TestState createState() => TestState();
+  InteractivePageState createState() => InteractivePageState();
 }
 
-class TestState extends State<Test> {
-  late TextEditingController textEditingController;
-  Color backgroundColor = Colors.red;
-  Map<String, bool> sportList = {
-    "Basket": false,
-    "Boxe": true,
-    "Hockey": true,
-    "Foot": true,
-    "Cricket": true,
-    "Danse": true,
-  };
+class InteractivePageState extends State<InteractivePage> {
 
-  @override
-  void initState() {
-    super.initState();
-    textEditingController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    textEditingController.dispose();
-    super.dispose();
-  }
+  Profile profile = Profile(firstName: "YourFirstName", lastName: "YourLastName");
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: SafeArea(
-        child: generateCheckList(),
-      )
+      appBar: AppBar(
+        title: const Text(
+          "Profile page",
+          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
+        ),
+        elevation: 2,
+        shadowColor: Colors.blueGrey[300],
+        centerTitle: true,
+        backgroundColor: Colors.blue[600],
+      ),
+    body: const SingleChildScrollView(
+      child: Text('hello'),
+    ),
     );
   }
-
-  Widget generateCheckList() {
-
-    List<Widget> widgetSportList = [];
-
-    sportList.forEach((label, value) {
-
-      Widget rowItem = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Text(label),
-          Checkbox(
-              value: value,
-              onChanged: ((newValue) => setState(() {
-                sportList[label] = newValue ?? false;
-              }))
-          )
-        ],
-      );
-
-      widgetSportList.add(rowItem);
-    });
-
-    return Column(children: widgetSportList);
-  }
 }
+
+
