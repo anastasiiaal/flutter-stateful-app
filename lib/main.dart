@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stateful_project/widgets/icon-text.dart';
+import 'package:stateful_project/widgets/small_title.dart';
 
 import 'class/profile.dart';
 
@@ -33,6 +34,7 @@ class InteractivePage extends StatefulWidget {
   InteractivePageState createState() => InteractivePageState();
 }
 
+enum Gender { male, female }
 
 class InteractivePageState extends State<InteractivePage> {
   Profile profile =
@@ -44,7 +46,8 @@ class InteractivePageState extends State<InteractivePage> {
   Widget build(BuildContext context) {
     final ImagePicker picker = ImagePicker();
     int selectedValue = 0;
-    List<int> dropdownItems = List<int>.generate(51, (int index) => index);
+    List<int> dropdownItems = List<int>.generate(101, (int index) => index);
+    Gender? _gender = Gender.male;
 
     Future<void> pickImage(ImageSource source) async {
       try {
@@ -198,6 +201,46 @@ class InteractivePageState extends State<InteractivePage> {
                     hintText: "Secret text"
                 ),
               ),
+            ),
+            const SizedBox(height: 10),
+            const SmallTitle(text: "I am ..."),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: ListTile(
+                        title: const Text('Man'),
+                        leading: Radio<Gender>(
+                          value: Gender.male,
+                          groupValue: _gender,
+                          onChanged: (Gender? value) {
+                            setState(() {
+                              _gender = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 40),
+                    Expanded(
+                      flex: 1,
+                      child: ListTile(
+                        title: const Text('Woman'),
+                        leading: Radio<Gender>(
+                          value: Gender.female,
+                          groupValue: _gender,
+                          onChanged: (Gender? value) {
+                            setState(() {
+                              _gender = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ]
+                ),
             ),
           ],
         ),
