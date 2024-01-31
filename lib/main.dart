@@ -41,15 +41,15 @@ class InteractivePageState extends State<InteractivePage> {
       Profile(firstName: "YourFirstName", lastName: "YourLastName");
 
   XFile? image;
-
   double _currentSliderValue = 130;
+  Gender? _gender = Gender.male;
 
   @override
   Widget build(BuildContext context) {
     final ImagePicker picker = ImagePicker();
-    int selectedValue = 0;
+    int ageValue = 0;
     List<int> ageDropdown = List<int>.generate(101, (int index) => index);
-    Gender? _gender = Gender.male;
+
 
     Future<void> pickImage(ImageSource source) async {
       try {
@@ -98,8 +98,8 @@ class InteractivePageState extends State<InteractivePage> {
                       trailing:
                           const Text('26 y.o.    ', style: TextStyle(fontSize: 18)),
                     ),
-                    const Row(children: [
-                      IconTextWidget(iconData: Icons.male, data: "man", label: ""),
+                    Row(children: [
+                      IconTextWidget(iconData: Icons.male, data: '$_gender', label: ""),
                     ]),
                     Row(children: [
                       IconTextWidget(iconData: Icons.height, data: '${_currentSliderValue.round()}', label: " cm"),
@@ -177,10 +177,10 @@ class InteractivePageState extends State<InteractivePage> {
                   Expanded(
                       flex: 1,
                       child: DropdownButton(
-                        value: selectedValue,
+                        value: ageValue,
                         onChanged: (newValue) {
                           setState(() {
-                            selectedValue = newValue!;
+                            ageValue = newValue!;
                           });
                         },
                         items: ageDropdown.map<DropdownMenuItem<int>>((int value) {
@@ -260,7 +260,6 @@ class InteractivePageState extends State<InteractivePage> {
                 },
               ),
             ),
-
           ],
         ),
       ),
