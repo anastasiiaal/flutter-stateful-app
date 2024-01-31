@@ -45,6 +45,20 @@ class InteractivePageState extends State<InteractivePage> {
   Gender? _gender = Gender.male;
   int ageValue = 0;
   List<int> ageDropdown = List<int>.generate(101, (int index) => index);
+  String _firstName = '';
+  String _lastName = '';
+
+  void changeName(String newName) {
+    setState(() {
+      _firstName = newName;
+    });
+  }
+
+  void changeLastName(String newName) {
+    setState(() {
+      _lastName = newName;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +107,7 @@ class InteractivePageState extends State<InteractivePage> {
                       CircleAvatar(
                           backgroundImage: Image.file(File(image!.path)).image,
                           radius: 54),
-                      title: const Text('Jeanna Doe', style: TextStyle(fontSize: 18)),
+                      title: Text('$_firstName $_lastName', style: const TextStyle(fontSize: 18)),
                       trailing:
                           Text('$ageValue y.o.    ', style: const TextStyle(fontSize: 18)),
                     ),
@@ -146,6 +160,7 @@ class InteractivePageState extends State<InteractivePage> {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
               child:
               TextFormField(
+                onChanged: changeName,
                 decoration: const InputDecoration(
                     hintText: "Your name"
                 ),
@@ -155,6 +170,7 @@ class InteractivePageState extends State<InteractivePage> {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
               child:
               TextFormField(
+                onChanged: changeLastName,
                 decoration: const InputDecoration(
                     hintText: "Your last name"
                 ),
