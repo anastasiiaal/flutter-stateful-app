@@ -43,13 +43,12 @@ class InteractivePageState extends State<InteractivePage> {
   XFile? image;
   double _currentSliderValue = 130;
   Gender? _gender = Gender.male;
+  int ageValue = 0;
+  List<int> ageDropdown = List<int>.generate(101, (int index) => index);
 
   @override
   Widget build(BuildContext context) {
     final ImagePicker picker = ImagePicker();
-    int ageValue = 0;
-    List<int> ageDropdown = List<int>.generate(101, (int index) => index);
-
 
     Future<void> pickImage(ImageSource source) async {
       try {
@@ -96,7 +95,7 @@ class InteractivePageState extends State<InteractivePage> {
                           radius: 54),
                       title: const Text('Jeanna Doe', style: TextStyle(fontSize: 18)),
                       trailing:
-                          const Text('26 y.o.    ', style: TextStyle(fontSize: 18)),
+                          Text('$ageValue y.o.    ', style: const TextStyle(fontSize: 18)),
                     ),
                     Row(children: [
                       IconTextWidget(iconData: Icons.male, data: '$_gender', label: ""),
