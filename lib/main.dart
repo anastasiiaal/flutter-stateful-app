@@ -40,13 +40,14 @@ class InteractivePageState extends State<InteractivePage> {
   Profile profile =
       Profile(firstName: "YourFirstName", lastName: "YourLastName");
 
-  XFile? image;
+  String _firstName = '';
+  String _lastName = '';
+  String _hiddenWord = '';
   double _currentSliderValue = 130;
   Gender? _gender = Gender.male;
   int ageValue = 0;
   List<int> ageDropdown = List<int>.generate(101, (int index) => index);
-  String _firstName = '';
-  String _lastName = '';
+  XFile? image;
 
   void changeName(String newName) {
     setState(() {
@@ -57,6 +58,12 @@ class InteractivePageState extends State<InteractivePage> {
   void changeLastName(String newName) {
     setState(() {
       _lastName = newName;
+    });
+  }
+
+  void changeSecretWord(String word) {
+    setState(() {
+      _hiddenWord = word;
     });
   }
 
@@ -123,8 +130,8 @@ class InteractivePageState extends State<InteractivePage> {
                     const Row(children: [
                       IconTextWidget(iconData: Icons.code, data: "Swift", label: ""),
                     ]),
-                    const Row(children: [
-                      IconTextWidget(iconData: Icons.fingerprint, data: "hidden text", label: ""),
+                    Row(children: [
+                      IconTextWidget(iconData: Icons.fingerprint, data: _hiddenWord, label: ""),
                     ]),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -214,8 +221,10 @@ class InteractivePageState extends State<InteractivePage> {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
               child:
               TextFormField(
+                obscureText: true,
+                onChanged: changeSecretWord,
                 decoration: const InputDecoration(
-                    hintText: "Secret text"
+                    hintText: "Your secret text"
                 ),
               ),
             ),
