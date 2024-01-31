@@ -12,7 +12,7 @@ class IconTextWidget extends StatelessWidget {
     return Row(
       children: [
         Padding(
-          padding: const EdgeInsets.only(right: 6, left: 16),
+          padding: const EdgeInsets.only(right: 10, left: 16),
           child: Icon(iconData, size: 26,),
         ),
         Text(label, style: const TextStyle(fontSize: 18, height: 1.8))

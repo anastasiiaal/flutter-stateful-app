@@ -43,6 +43,8 @@ class InteractivePageState extends State<InteractivePage> {
   @override
   Widget build(BuildContext context) {
     final ImagePicker picker = ImagePicker();
+    int selectedValue = 0;
+    List<int> dropdownItems = List<int>.generate(51, (int index) => index);
 
     Future<void> pickImage(ImageSource source) async {
       try {
@@ -126,12 +128,74 @@ class InteractivePageState extends State<InteractivePage> {
                                 color: Colors.blue[800],
                                 size: 22,
                                 semanticLabel:
-                                    'Text to announce in accessibility modes'),
+                                    'Text to announce in accessibility modes'
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+              child:
+              TextFormField(
+                decoration: const InputDecoration(
+                    hintText: "Your name"
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+              child:
+              TextFormField(
+                decoration: const InputDecoration(
+                    hintText: "Your last name"
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+              child:
+              Row(
+                children: [
+                  const Expanded(
+                    flex: 2,
+                    child: Text('Select your age',
+                        style: TextStyle(fontSize: 18, height: 1.8)
+                    )
+                  ),
+                  const SizedBox(width: 60),
+                  Expanded(
+                      flex: 1,
+                      child: DropdownButton(
+                        value: selectedValue,
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedValue = newValue!;
+                          });
+                        },
+                        items: dropdownItems.map<DropdownMenuItem<int>>((int value) {
+                          return DropdownMenuItem<int>(
+                            value: value,
+                            child: Text(value.toString()),
+                          );
+                        }).toList(),
+                        isExpanded: true,
+                      ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 5),
+              child:
+              TextFormField(
+                decoration: const InputDecoration(
+                    hintText: "Secret text"
                 ),
               ),
             ),
@@ -141,3 +205,5 @@ class InteractivePageState extends State<InteractivePage> {
     );
   }
 }
+
+
