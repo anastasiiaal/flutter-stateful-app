@@ -42,11 +42,13 @@ class InteractivePageState extends State<InteractivePage> {
 
   XFile? image;
 
+  double _currentSliderValue = 130;
+
   @override
   Widget build(BuildContext context) {
     final ImagePicker picker = ImagePicker();
     int selectedValue = 0;
-    List<int> dropdownItems = List<int>.generate(101, (int index) => index);
+    List<int> ageDropdown = List<int>.generate(101, (int index) => index);
     Gender? _gender = Gender.male;
 
     Future<void> pickImage(ImageSource source) async {
@@ -97,19 +99,19 @@ class InteractivePageState extends State<InteractivePage> {
                           const Text('26 y.o.    ', style: TextStyle(fontSize: 18)),
                     ),
                     const Row(children: [
-                      IconTextWidget(iconData: Icons.male, label: "Man"),
+                      IconTextWidget(iconData: Icons.male, data: "man", label: ""),
+                    ]),
+                    Row(children: [
+                      IconTextWidget(iconData: Icons.height, data: '${_currentSliderValue.round()}', label: " cm"),
                     ]),
                     const Row(children: [
-                      IconTextWidget(iconData: Icons.height, label: "160 cm"),
+                      IconTextWidget(iconData: Icons.sports_basketball, data: "travel, Ride", label: ""),
                     ]),
                     const Row(children: [
-                      IconTextWidget(iconData: Icons.sports_basketball, label: "travel, Ride"),
+                      IconTextWidget(iconData: Icons.code, data: "Swift", label: ""),
                     ]),
                     const Row(children: [
-                      IconTextWidget(iconData: Icons.code, label: "Swift"),
-                    ]),
-                    const Row(children: [
-                      IconTextWidget(iconData: Icons.fingerprint, label: "lalala"),
+                      IconTextWidget(iconData: Icons.fingerprint, data: "hidden text", label: ""),
                     ]),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -181,7 +183,7 @@ class InteractivePageState extends State<InteractivePage> {
                             selectedValue = newValue!;
                           });
                         },
-                        items: dropdownItems.map<DropdownMenuItem<int>>((int value) {
+                        items: ageDropdown.map<DropdownMenuItem<int>>((int value) {
                           return DropdownMenuItem<int>(
                             value: value,
                             child: Text(value.toString()),
@@ -242,6 +244,23 @@ class InteractivePageState extends State<InteractivePage> {
                   ]
                 ),
             ),
+            const SmallTitle(text: "I measure ..."),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              child: Slider(
+                value: _currentSliderValue,
+                min: 130,
+                max: 220,
+                divisions: 90, // Adjust the number of divisions for granularity
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              ),
+            ),
+
           ],
         ),
       ),
